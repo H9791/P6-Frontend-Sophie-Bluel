@@ -47,6 +47,10 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+:root{
+    --primary-color: #1D6154;
+}
+
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -125,6 +129,24 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+/*add styling to categories buttons*/
+.categories{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin:20px;
+}
+
+.categoryButton{
+    color: var(--primary-color);
+    border-radius: 60px;
+    padding: 10px;
+    font-family: 'Syne';
+    font-weight: 700;
+    font-size: 17px;
+    border: 2px solid var(--primary-color);
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
