@@ -15,17 +15,7 @@
 </head>
 
 <body>
-    <aside id="modal1" class="modal" style="display: none">
-        <div class="modal-wrapper">
-            <img src="./assets/icons/xmark-solid.svg" class="close-icon">
-            <p>Contenu du modal. Contenu du modal. Contenu du modal. Contenu du modal.
-                Contenu du modal. Contenu du modal. Contenu du modal. Contenu du modal. Contenu du modal.
-                Contenu du modal. Contenu du modal. Contenu du modal. Contenu du modal.
-                Contenu du modal. Contenu du modal. Contenu du modal. Contenu du modal.
-                Contenu du modal. Contenu du modal. Contenu du modal. Contenu du modal.
-            </p>
-        </div>
-    </aside>
+
 
     <div class="black-header">
         <div>
@@ -37,34 +27,31 @@
         </div>
     </div>
 
-
-
     <header>
 
-
-        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
         <nav>
             <ul>
                 <li>projets</li>
                 <li>contact</li>
-                <li><a href="./login.html" id="login">login</a></li>
+                <li id="logout">logout</li>
                 <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
     </header>
+
+
     <main>
+
         <section id="introduction">
             <figure>
                 <img src="./assets/images/sophie-bluel.png" alt="">
-
                 <div class="modify">
-                    <a href="#modal1" class="modify-link">
+                    <a href="#modal1">
                         <i class="fa-regular fa-pen-to-square"></i>
                         <span>modifier</span>
                     </a>
                 </div>
-
-
             </figure>
             <article>
                 <h2>Designer d'espace</h2>
@@ -76,23 +63,20 @@
                 <p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
                     décorateur(trice)</p>
             </article>
+
         </section>
 
 
         <section id="portfolio">
-
-            <div class="portfolio-heading">
-
-                <h2>Mes Projets</h2>
-                <a href="#modal1" class="modify-link">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    <span>modifier</span>
-                </a>
-
+            <div class="portfolio-header">
+                <h2 id="portfolio-edit-heading">Mes Projets</h2>
+                <div class="portfolio-modify">
+                    <a href="#modal1">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        <span>modifier</span>
+                    </a>
+                </div>
             </div>
-
-            <!-- buttons for category selection-->
-            <div class="categories"></div>
 
             <div class="gallery">
             </div>
@@ -121,8 +105,10 @@
             </ul>
         </nav>
     </footer>
+
+    <script src="./js/index-edit-logout.js"></script>
     <script src="./js/article.js"></script>
-    <script src="index.js"></script>
+    <script src="./index-edit.js"></script>
 
 </body>
 
