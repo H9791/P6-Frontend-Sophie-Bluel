@@ -37,19 +37,19 @@ function AddCategoryButtonsToDocument(categories) {
     let categoryButtonsDiv = document.querySelector(".categories");
 
     for (let categoryButton of categories) {
-        console.log(categoryButton);
+        /*console.log(categoryButton);*/
         let button = document.createElement("div");
 
-        /**add event listener to a category button*/
+        /*add event listener to a category button*/
         AddEventListenerToCategoryButton(button, categoryButton[0]);
-        /**adds styling class to a category button */
+        /*adds styling class to a category button */
         button.classList.add("category-button");
         if (categoryButton[0] === 0) {
             button.classList.add("category-btn-selected");
         }
-        /**adds id to a category button */
+        /*adds id to a category button */
         button.setAttribute("categoryId", categoryButton[0]);
-        /**adds name to a category button*/
+        /*adds name to a category button*/
         button.innerText = categoryButton[1];
         categoryButtonsDiv.appendChild(button);
     }
@@ -57,7 +57,7 @@ function AddCategoryButtonsToDocument(categories) {
 
 function AddEventListenerToCategoryButton(button, categoryID) {
     button.addEventListener("click", () => {
-        /**remove "selected" styling from any other button
+        /*remove "selected" styling from any other button
          * and style button that has beed clicked on
         */
         document.querySelectorAll(".category-btn-selected")
@@ -93,8 +93,11 @@ function CreateObjectsHTMLStructure(jsonArticle) {
 function AdjustLayoutIfLoggedIn() {
     //make sure that the modal window doesn't display
     //document.querySelector(".modal").style.display="none";
-
-    if (window.localStorage.getItem("token")) {
+    console.log("adjust: ");
+    console.log(window.sessionStorage.getItem("token"));
+    console.log("HELLO BITCHES!!!")
+    if (window.sessionStorage.getItem("token")) {
+        console.log("AUTHORIZED");
         /*authorized - layout for edit*/
         document.querySelector(".categories").style.visibility = "hidden";
 
@@ -105,33 +108,57 @@ function AdjustLayoutIfLoggedIn() {
         //add eventlistener for modify link - it will open the modal window
         document.querySelectorAll(".modify-link")
             .forEach(item => {
-                item.addEventListener("click", (event) => {
+                console.log("adjust layout event listener");
+                item.addEventListener("click", async () => {
                     //show the modal window
                     document.querySelector(".modal").style.display = null;
+                    //and display modal window content
+                    await DisplayModalWindowContent();
                 })
             })
 
-        //event listener to close the modal window
-        document.querySelector(".close-icon")
-            .addEventListener("click", (e)=>{
-                /*alert("clicked");*/
-                document.querySelector(".modal").style.display = "none";
-            } );
+        //event listener for the arrow back 
+        document.querySelector(".arrow-back-icon")
+            .addEventListener("click", () => {
+                //go to the gallery window
+                document.querySelector("#modal1").style.display = null
+                document.querySelector("#modal2").style.display = "none";
+                //clear form after clicking on arrow back
+                ClearForm();
 
+            })
+
+        //event listener to close the modal window
+        document.querySelector("#modal1 .close-icon")
+            .addEventListener("click", () => {
+                document.querySelector("#modal1")
+                    .style.display = "none";
+                ClearForm();
+            });
+
+
+        document.querySelector("#modal2 .close-icon")
+            .addEventListener("click", () => {
+                document.querySelector("#modal2")
+                    .style.display = "none";
+                ClearForm();
+            });
 
         //add event listener - if user logs out, redirect to index.html
         document.querySelector("#login").addEventListener("click", (event) => {
             event.preventDefault();
-            window.localStorage.removeItem("token");
+            console.log("removing token!");
+            window.sessionStorage.removeItem("token");
             window.location.href = "./index.html";
-        })
+        });
     } else {
         /*not authorized*/
+        console.log("NOT AUTHORIZED LAYOUT");
         document.querySelector(".black-header").style.display = "none";
         /*document.querySelector(".modify-link").style.display = "none";*/
         document.querySelectorAll(".modify-link").
             forEach(item => item.style.display = "none");
-
+        document.querySelector(".modal").style.display = "none";
 
         //display: invisible - the gap will stay in place 
         document.querySelector(".categories").style.visibility = "visible";
@@ -139,14 +166,25 @@ function AdjustLayoutIfLoggedIn() {
     }
 }
 
+function ClearForm() {
+    //clear image from the form if user already filled something in
+    if (document.querySelector("#image-thumbnail img")) {
+        document.querySelector("#image-thumbnail img").remove();
+    }
+    //clear file input
+    document.querySelector("input[type=file]").value = null;
+    document.querySelector("form #title-input").value = null;
+    document.querySelector("form #input-categories").value = null;
+}
+
+
 async function Start() {
-
-
+    console.log("index html token:");
+    console.log(window.sessionStorage.getItem("token"));
     //remove any works before rendering the page anew
     RemoveAllWorksFromThePage();
     /* initial render - show all works*/
     GetWorks(0);
-
     let categories = await GetAllCategories();
     AddCategoryButtonsToDocument(categories);
 

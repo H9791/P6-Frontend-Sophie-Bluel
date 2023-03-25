@@ -1,3 +1,7 @@
+//window.sessionStorage.setItem("token", null);
+window.sessionStorage.removeItem("token");
+
+
 function AddFormEventListener() {
     console.log("addFormEventListener");
     const loginForm = document.querySelector(".login-form");
@@ -15,17 +19,18 @@ function AddFormEventListener() {
         });
         if (response.status === 200) {
             const jsonData = await response.json();
-            window.localStorage.setItem("token", jsonData.token);
+            window.sessionStorage.setItem("token", jsonData.token);
             console.log("status 200");
             /**user authorized - redirect to the index site*/
+            console.log("token before redirecting: " + localStorage.getItem("token"));
             window.location.href = "./index.html";
         } else if (response.status === 401) {
             alert("Erreur dans l’identifiant ou le mot de passe");
-            window.localStorage.removeItem("token");
+            window.sessionStorage.removeItem("token");
         } else {
             alert("Erreur");
         }
-
+        console.log("this it token: " + window.sessionStorage.getItem("token"));
     });
 }
 
