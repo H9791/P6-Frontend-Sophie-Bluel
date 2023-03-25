@@ -37,7 +37,6 @@ async function TrashWorkFromGalleryEvent(e) {
     }
 }
 
-
 function CreateModalWindowGallery(jsonArticle) {
     let article = new Article(jsonArticle);
     let div = document.createElement("div");
@@ -105,7 +104,7 @@ function AddListenerToAjouterPhotoButton(e) {
     document.querySelector("#modal2").style.display = null;
 }
 
-async function AddWorkFormSubmit(e) {
+async function AddWorkOnFormSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
     //make sure that the form to add a work in empty from
@@ -129,29 +128,42 @@ async function AddWorkFormSubmit(e) {
         },
         body: formData
     });
-    console.log("add work response text:");
-    console.log(await response.text());
-    console.log(await response.status);
+ 
+    let responseJson = await response.json();
+    
     //if adding of work successful, then go back to the previous modal window
     if (response.status !== 201) {
-        alert("Erreur " + response.status);
+        alert("Erreur " + responseJson.status);
     }
-    //add it to the dom or the main mage and redirect to it
-    //show the main page
-    document.querySelector("#modal1").style.display = "none";
+
+    //add it to the dom or the main mage and redirect to modal with all works
+    //
+    document.querySelector("#modal1").style.display = null;
     document.querySelector("#modal2").style.display = "none";
 
 
     //add the image to the main page
-    GetWorks(0);
+    //GetWorks(0);
 
-    //clear the form next image
-    if (document.querySelector("#image-thumbnail img")) {
+    //add work to modal window 
+    jsonArticle = {
+        id : responseJson.id,
+        categoryId: responseJson.categoryId,
+        imageUrl: responseJson.imageUrl,
+        title: responseJson.title
+    }
+    CreateModalWindowGallery(jsonArticle);
+    //add work to porfolio on the main page
+    CreateObjectsHTMLStructure(jsonArticle);
+    //clear the form for the next image
+    ClearForm();
+    /*if (document.querySelector("#image-thumbnail img")) {
         document.querySelector("#image-thumbnail img").remove();
     }
     document.querySelector("input[type=file]").value = null;
     document.querySelector("form #title-input").value = null;
     document.querySelector("form #input-categories").value = null;
+*/
 
 }
 
@@ -165,13 +177,15 @@ async function DisplayModalWindowContent() {
     //modalHeading.innerText = "Galerie photo";
     await GetGalleryThumbnails(0);
 
+    //show contents of the portfolio
+
     let modalWindowButton = document.querySelector("#modal-window-btn");
     //adding works - change of layout (change of <aside>)
     modalWindowButton.addEventListener("click", AddListenerToAjouterPhotoButton);
 
     //add listener to "Valider" button - "submit action of the form"
     let formSubmitAction = document.querySelector("form");
-    formSubmitAction.addEventListener("submit", AddWorkFormSubmit);
+    formSubmitAction.addEventListener("submit", AddWorkOnFormSubmit);
     //add listener to know when the entire for has been filled with values
     formSubmitAction.addEventListener("formdata", (e) => {
         console.log("formdata fired");

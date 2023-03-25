@@ -17,7 +17,7 @@
 <body>
     <aside id="modal1" class="modal" style="display: none">
         <div class="modal-wrapper" id="modal-wrapper">
-            <img src="./assets/icons/xmark-solid.svg" class="close-icon">
+            <img src="./assets/icons/xmark-solid.svg" class="close-icon" alt="close window icon">
             <p class="modal-heading">Galerie photo</p>
             <div class="modal-content"></div>
             <hr>
@@ -29,8 +29,8 @@
     <aside id="modal2" class="modal" style="display: none">
         <div class="modal-wrapper" id="modal-wrapper-photo">
             <div class="modal-header">
-                <img src="./assets/icons/arrow-back.svg" class="arrow-back-icon">
-                <img src="./assets/icons/xmark-solid.svg" class="close-icon">
+                <img src="./assets/icons/arrow-back.svg" class="arrow-back-icon" alt="go back icon">
+                <img src="./assets/icons/xmark-solid.svg" class="close-icon" alt="close window icon">
             </div>
             <p class="modal-heading">Ajout photo</p>
             <div class="add-photo-content">
@@ -38,7 +38,7 @@
 
                     <div id="add-file">
                         <div id="image-thumbnail"></div>
-                        <img src="./assets/icons/image-placeholder.svg" id="image-placeholder">
+                        <img src="./assets/icons/image-placeholder.svg" id="image-placeholder" alt="image placeholder icon">
 
                         <div class="file-input">
                             <input type="file" id="file" class="file" required>
@@ -58,7 +58,7 @@
                     <label for="input-categories">Catégorie</label><br>
 
                     <select id="input-categories" name="simple" required>
-                        <option hidden disabled selected value></option>
+                        <option hidden disabled selected value>&nbsp;</option>
                         <option value="1">Objects</option>
                         <option value="2">Appartements</option>
                         <option value="3">Hotels & restaurants</option>
@@ -99,7 +99,7 @@
     <main>
         <section id="introduction">
             <figure>
-                <img src="./assets/images/sophie-bluel.png" alt="">
+                <img src="./assets/images/sophie-bluel.png" alt="Sophie Bluel">
 
                 <div class="modify">
                     <a href="#modal1" class="modify-link">

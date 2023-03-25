@@ -38,37 +38,54 @@ function AddCategoryButtonsToDocument(categories) {
 
     for (let categoryButton of categories) {
         /*console.log(categoryButton);*/
-        let button = document.createElement("div");
+        let buttonDiv = document.createElement("div");
 
         /*add event listener to a category button*/
-        AddEventListenerToCategoryButton(button, categoryButton[0]);
+        AddEventListenerToCategoryButton(buttonDiv, categoryButton[0]);
         /*adds styling class to a category button */
-        button.classList.add("category-button");
+        buttonDiv.classList.add("category-button");
         if (categoryButton[0] === 0) {
-            button.classList.add("category-btn-selected");
+            buttonDiv.classList.add("category-btn-selected");
         }
         /*adds id to a category button */
-        button.setAttribute("categoryId", categoryButton[0]);
+        buttonDiv.setAttribute("category", categoryButton[0]);
         /*adds name to a category button*/
-        button.innerText = categoryButton[1];
-        categoryButtonsDiv.appendChild(button);
+        buttonDiv.innerText = categoryButton[1];
+        categoryButtonsDiv.appendChild(buttonDiv);
     }
 }
 
 function AddEventListenerToCategoryButton(button, categoryID) {
     button.addEventListener("click", () => {
+
+        //console.log()
+        //conditional css selector -awesome :-D
+        if (categoryID === 0) {
+            //show all works
+            document.querySelectorAll(".gallery figure").
+                forEach(item => item.style.display = null);
+        } else {
+            //SHOWS items that ARE of the category id
+            document.querySelectorAll(`.gallery figure[category="${categoryID}"]`)
+                .forEach(item => item.style.display = null);
+            //REMOVES from display all works that ARE NOT of the category id
+            document.querySelectorAll(`.gallery figure:not(:where(figure[category="${categoryID}"]))`)
+                .forEach(item => item.style.display = "none");
+        }
+
+
         /*remove "selected" styling from any other button
          * and style button that has beed clicked on
         */
-        document.querySelectorAll(".category-btn-selected")
-            .forEach(e => e.classList.remove("category-btn-selected"));
+        //document.querySelectorAll(".category-btn-selected")
+        //    .forEach(e => e.classList.remove("category-btn-selected"));
 
-        button.classList.add("category-btn-selected");
+        //button.classList.add("category-btn-selected");
         /*remove previous selection of works before
         adding another one*/
-        RemoveAllWorksFromThePage();
+        //RemoveAllWorksFromThePage();
         /*rendering new selection of works on page*/
-        GetWorks(categoryID);
+        //GetWorks(categoryID);
     });
 }
 
@@ -76,10 +93,12 @@ function CreateObjectsHTMLStructure(jsonArticle) {
     let article = new Article(jsonArticle);
 
     let figure = document.createElement("figure");
+    figure.setAttribute("category", article.categoryId);
 
     let img = document.createElement("img");
     img.setAttribute("src", article.imageUrl);
     img.setAttribute("alt", article.title);
+
 
     let figcaption = document.createElement("figcaption");
     figcaption.innerText = article.title;
@@ -95,7 +114,7 @@ function AdjustLayoutIfLoggedIn() {
     //document.querySelector(".modal").style.display="none";
     console.log("adjust: ");
     console.log(window.sessionStorage.getItem("token"));
-    console.log("HELLO BITCHES!!!")
+
     if (window.sessionStorage.getItem("token")) {
         console.log("AUTHORIZED");
         /*authorized - layout for edit*/

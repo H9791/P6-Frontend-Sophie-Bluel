@@ -345,10 +345,6 @@ form:invalid #validate-button {
     margin-bottom: 30px;
 }
 
-#add-file-selector {
-
-}
-
 #image-thumbnail {
     position: absolute;
 }
