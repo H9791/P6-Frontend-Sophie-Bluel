@@ -21,14 +21,12 @@ function RemoveAllWorksFromThePage() {
     }
 }
 
-async function GetWorks(id) {
+async function GetWorks() {
     await fetch("http://localhost:5678/api/works")
         .then(data => data.json())
         .then(jsonListArticle => {
             for (let jsonArticle of jsonListArticle) {
-                if (id === 0 || jsonArticle.category.id === id) {
                     CreateObjectsHTMLStructure(jsonArticle);
-                }
             }
         });
 }
@@ -73,19 +71,6 @@ function AddEventListenerToCategoryButton(button, categoryID) {
                 .forEach(item => item.style.display = "none");
         }
 
-
-        /*remove "selected" styling from any other button
-         * and style button that has beed clicked on
-        */
-        //document.querySelectorAll(".category-btn-selected")
-        //    .forEach(e => e.classList.remove("category-btn-selected"));
-
-        //button.classList.add("category-btn-selected");
-        /*remove previous selection of works before
-        adding another one*/
-        //RemoveAllWorksFromThePage();
-        /*rendering new selection of works on page*/
-        //GetWorks(categoryID);
     });
 }
 
@@ -94,6 +79,7 @@ function CreateObjectsHTMLStructure(jsonArticle) {
 
     let figure = document.createElement("figure");
     figure.setAttribute("category", article.categoryId);
+    figure.setAttribute("figure-id", article.id);
 
     let img = document.createElement("img");
     img.setAttribute("src", article.imageUrl);
@@ -203,12 +189,11 @@ async function Start() {
     //remove any works before rendering the page anew
     RemoveAllWorksFromThePage();
     /* initial render - show all works*/
-    GetWorks(0);
+    GetWorks();
     let categories = await GetAllCategories();
     AddCategoryButtonsToDocument(categories);
 
     AdjustLayoutIfLoggedIn();
-
 }
 
 Start();

@@ -16,7 +16,6 @@ async function TrashWorkFromGalleryEvent(e) {
     e.stopPropagation();
 
     let imageToTrashID = e.target.getAttribute("image-to-trash");
-    let imageToTrash = document.querySelector(`[image-id="${imageToTrashID}"]`);
     let divOfImageToTrash = document.querySelector(`[image-container-id="${imageToTrashID}"]`);
 
     const requestOptions = {
@@ -29,11 +28,13 @@ async function TrashWorkFromGalleryEvent(e) {
     console.log("status " + status);
     console.log("status " + " ");
     if (status === 200 || status === 204) {
-        //remove element from DOM
-        divOfImageToTrash.remove();
+        //remove element from DOM of thumbnails
+        divOfImageToTrash.remove(); 
+        //also remove from the main page
+        document.querySelector(`[figure-id="${imageToTrashID}"]`).remove();
     } else {
         console.log(status + " - NOT deleted");
-        alert(status + " - deleted");
+        alert(status + " - NOT deleted");
     }
 }
 
@@ -141,10 +142,6 @@ async function AddWorkOnFormSubmit(e) {
     document.querySelector("#modal1").style.display = null;
     document.querySelector("#modal2").style.display = "none";
 
-
-    //add the image to the main page
-    //GetWorks(0);
-
     //add work to modal window 
     jsonArticle = {
         id : responseJson.id,
@@ -157,13 +154,6 @@ async function AddWorkOnFormSubmit(e) {
     CreateObjectsHTMLStructure(jsonArticle);
     //clear the form for the next image
     ClearForm();
-    /*if (document.querySelector("#image-thumbnail img")) {
-        document.querySelector("#image-thumbnail img").remove();
-    }
-    document.querySelector("input[type=file]").value = null;
-    document.querySelector("form #title-input").value = null;
-    document.querySelector("form #input-categories").value = null;
-*/
 
 }
 
@@ -190,8 +180,6 @@ async function DisplayModalWindowContent() {
     formSubmitAction.addEventListener("formdata", (e) => {
         console.log("formdata fired");
     });
-
-
 
     //add event listener on file input
     document.querySelector("input[type=file]")
