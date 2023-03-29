@@ -55,7 +55,10 @@ function AddCategoryButtonsToDocument(categories) {
 
 function AddEventListenerToCategoryButton(button, categoryID) {
     button.addEventListener("click", () => {
+        document.querySelectorAll(".category-btn-selected")
+            .forEach(e => e.classList.remove("category-btn-selected"));
 
+        button.classList.add("category-btn-selected");
         //console.log()
         //conditional css selector -awesome :-D
         if (categoryID === 0) {
