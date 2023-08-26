@@ -1,7 +1,5 @@
 # P6 - Sophie Bluel
 
-Créez une page web dynamique avec JavaScript
+Portfolio website of architect Sophie Bluel.
 
-site portfolio of an architect
-
-![Screenshot](/assets/images/SophieBluelHomepage.webp)
+![Screenshot](/FrontEnd/assets/images/SophieBluelHomepage.webp)
